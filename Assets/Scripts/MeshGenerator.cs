@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class MeshGenerator {
 
+    // thread method
     public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve _heightCurve, int levelOfDetail) {
         // to each thread have heightCurve Object (else all are identical!)
         AnimationCurve heightCurve = new AnimationCurve(_heightCurve.keys);
@@ -63,6 +64,8 @@ public static class MeshGenerator {
             }
         }
 
+        meshData.BakeNormals();
+
         return meshData;
     }
 
@@ -72,6 +75,7 @@ public class MeshData {
     Vector3[] vertices;
     int[] triangles;
     Vector2[] uvs;
+    Vector3[] bakedNormals;
 
     Vector3[] borderVertices;
     int[] borderTriangles;
@@ -166,12 +170,16 @@ public class MeshData {
         return Vector3.Cross(sideAB, sideAC).normalized;
     }
 
+    public void BakeNormals() {
+        bakedNormals = CalculateNomals();
+    }
+
     public Mesh CreateMesh() {
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.uv = uvs;
-        mesh.normals = CalculateNomals();
+        mesh.normals = bakedNormals;
         return mesh;
     }
 }
