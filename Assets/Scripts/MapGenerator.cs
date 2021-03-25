@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
-using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour {
 
@@ -16,11 +15,15 @@ public class MapGenerator : MonoBehaviour {
 
     public TerrainData terrainData;
     public NoiseData noiseData;
-    public TextureData textureData;
 
     public Material terrainMaterial;
 
-    [Range(0, 6)]
+    [Range(0, MeshGenerator.numSupportedChunkSizes - 1)]
+    public int chunkSizeIndex;
+    [Range(0, MeshGenerator.numSupportedFlatShadedChunkSizes - 1)]
+    public int flatShadedChunkSizeIndex;
+
+    [Range(0, MeshGenerator.numSuppportedLODs-1)]
     public int editorPreviewLOD;
 
     public bool autoUpdate;
@@ -36,21 +39,28 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    void OnTextureValuesUpdated() {
-        textureData.ApplyToMaterial(terrainMaterial);
-    }
-
-
     /* max 65000 vertex for a single mesh
      * 240 (minus 1) because 240 is divisible by all pairs until 12
+     * only supported : 
+     * 0
+     * 24
+     * 48
+     * 72
+     * 96
+     * 120
+     * 144
+     * 168
+     * 192
+     * 216
+     * 240
      */
     // public const int mapChunkSize = 95;
     public int mapChunkSize {
         get {
             if (terrainData.useFlatShading) {
-                return 95;
+                return MeshGenerator.supportedFlatShadedChunkSizes[flatShadedChunkSizeIndex] - 1;
             } else {
-                return 239;
+                return MeshGenerator.supportedChunkSizes[chunkSizeIndex] - 1;
             }
         }
     }
@@ -150,11 +160,6 @@ public class MapGenerator : MonoBehaviour {
             noiseData.OnValuesUpdated += OnValuesUpdated;
         }
 
-        if (textureData != null) {
-            textureData.OnValuesUpdated -= OnTextureValuesUpdated;
-            textureData.OnValuesUpdated += OnTextureValuesUpdated;
-        }
-
     }
 
     struct MapThreadInfo<T> {
@@ -166,7 +171,6 @@ public class MapGenerator : MonoBehaviour {
             this.parameter = parameter;
         }
     }
-
 }
 
 public struct MapData {

@@ -1,21 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class UpdatableData : ScriptableObject {
 
     public event System.Action OnValuesUpdated;
     public bool autoUpdate;
 
+    #if UNITY_EDITOR
+
     protected virtual void OnValidate() {
         if (autoUpdate) {
-            NotifyOfUpdateValues();
+            UnityEditor.EditorApplication.update += NotifyOfUpdatedValues;
         }
     }
 
-    public void NotifyOfUpdateValues() {
-        if(OnValuesUpdated != null) {
+    public void NotifyOfUpdatedValues() {
+        UnityEditor.EditorApplication.update -= NotifyOfUpdatedValues;
+        if (OnValuesUpdated != null) {
             OnValuesUpdated();
         }
     }
+
+    #endif
+
 }

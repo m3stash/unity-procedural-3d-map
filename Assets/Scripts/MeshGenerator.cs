@@ -4,6 +4,12 @@ using UnityEngine;
 
 public static class MeshGenerator {
 
+    public const int numSuppportedLODs = 5;
+    public const int numSupportedChunkSizes = 9;
+    public const int numSupportedFlatShadedChunkSizes = 3;
+    public static readonly int[] supportedChunkSizes = { 48, 72, 96, 120, 144, 168, 192, 216, 240 };
+    public static readonly int[] supportedFlatShadedChunkSizes = { 48, 72, 96 };
+
     // thread method
     public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve _heightCurve, int levelOfDetail, bool useFlatShading) {
         // to each thread have heightCurve Object (else all are identical!)
