@@ -128,14 +128,14 @@ Material:
     m_Floats:
     - Vector1_127d20ee39424486bdea95bcacbd8a56: 0
     - Vector1_17c6c3dbbbc7482da97eddf9663f3103: 40
-    - Vector1_2f4cf26c89014c7fbc35ff4031c9077b: 3
+    - Vector1_2f4cf26c89014c7fbc35ff4031c9077b: 5
     - Vector1_412151b1deb44c06974e68c5a4f5c92c: 60
     - Vector1_439b3c4cfaef4acd8ca6a8095d343e98: 10
     - Vector1_67c281a1a1224f41a9508ec3ef8bd2a4: 40
     - Vector1_a1957ff20c114f6c9ed220b1967ee60d: 3
     - Vector1_cbd7529d525647ddb079b8b9de505451: 10
     - Vector1_eca8e51e70ec406c818d74585a857247: 60
-    - Vector1_efdaddb9d7bb46df8c0a7763fdf76f20: 0
+    - Vector1_efdaddb9d7bb46df8c0a7763fdf76f20: 2
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaCutoffEnable: 0
