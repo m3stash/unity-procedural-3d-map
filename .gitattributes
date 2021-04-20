@@ -1,0 +1,2 @@
+# Unity Binary Assets
+*.cubemap filter=lfs diff=lfs merge=lfs -text
