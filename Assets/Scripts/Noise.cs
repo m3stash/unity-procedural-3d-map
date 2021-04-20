@@ -8,7 +8,11 @@ public static class Noise {
         Local,
         Global
     }
-
+    /// scale : The scale of the "perlin noise" view
+    /// heightMultiplier : The maximum height of the terrain
+    /// octaves : Number of iterations (the more there is, the more detailed the terrain will be)
+    /// persistance : The higher it is, the rougher the terrain will be (this value should be between 0 and 1 excluded)
+    /// lacunarity : The higher it is, the more "feature" the terrain will have (should be strictly positive)
     public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, NoiseSettings settings, Vector2 sampleCenter) {
         float[,] noiseMap = new float[mapWidth, mapHeight];
 
@@ -50,6 +54,7 @@ public static class Noise {
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
                     noiseHeight += perlinValue * amplitude;
 
+                    // Decrease the amplitude and the frequency
                     amplitude *= settings.persistance;
                     frequency *= settings.lacunarity;
 
