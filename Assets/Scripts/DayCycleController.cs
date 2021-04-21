@@ -24,7 +24,7 @@ public class DayCycleController : MonoBehaviour {
     }
 
     void Update() {
-        timeOfDay += Time.deltaTime * orbitSpeed;
+        timeOfDay += Time.deltaTime * orbitSpeed / 5;
         if (timeOfDay > 24) {
             timeOfDay = 0;
         }
@@ -37,14 +37,14 @@ public class DayCycleController : MonoBehaviour {
     }
 
     private void UpdateTime() {
-        float alpha = timeOfDay / 24.0f;
+        float alpha = (timeOfDay / 24.0f);
         float sunRotation = Mathf.Lerp(-90, 270, alpha);
         float moonRotation = sunRotation - 180;
 
         sun.transform.rotation = Quaternion.Euler(sunRotation, -150, 0);
         moon.transform.rotation = Quaternion.Euler(moonRotation, -150, 0);
 
-        sky.spaceEmissionMultiplier.value = starsCurve.Evaluate(alpha) * 0.1f;
+        sky.spaceEmissionMultiplier.value = starsCurve.Evaluate(alpha) * 1.1f;
 
         CheckNightDayTransition();
     }
